@@ -519,3 +519,31 @@ func (s *Shell) SwarmConnect(ctx context.Context, addr ...string) error {
 		Exec(ctx, &conn)
 	return err
 }
+
+func (s *Shell) DhtGet(path string) ([]byte, error) {
+	resp, err := s.Request("dht/get", path).Send(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Close()
+
+	if resp.Error != nil {
+		return nil, resp.Error
+	}
+
+	return ioutil.ReadAll(resp.Output)
+}
+
+func (s *Shell) DhtPut(path string, value string) ([]byte, error) {
+	resp, err := s.Request("dht/put", path, value).Send(context.Background())
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Close()
+
+	if resp.Error != nil {
+		return nil, resp.Error
+	}
+
+	return ioutil.ReadAll(resp.Output)
+}

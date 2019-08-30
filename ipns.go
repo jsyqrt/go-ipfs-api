@@ -3,6 +3,9 @@ package shell
 import (
 	"context"
 	"time"
+
+	proto "github.com/gogo/protobuf/proto"
+	pb "github.com/ipfs/go-ipns/pb"
 )
 
 type PublishResponse struct {
@@ -52,4 +55,20 @@ func (s *Shell) Resolve(id string) (string, error) {
 	var out struct{ Path string }
 	err := req.Exec(context.Background(), &out)
 	return out.Path, err
+}
+
+// GetPublished is used for finding the published ipns entry
+func (s *Shell) GetPublished(ipns string) (*pb.IpnsEntry, error) {
+	var value []byte
+	req := s.Request("dht/get", ipns)
+	err := req.Exec(context.Background(), &value)
+	if err != nil {
+		return nil, err
+	}
+
+	e := new(pb.IpnsEntry)
+	if err := proto.Unmarshal(value, e); err != nil {
+		return nil, err
+	}
+	return e, nil
 }
