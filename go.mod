@@ -2,8 +2,10 @@ module github.com/jsyqrt/go-ipfs-api
 
 require (
 	github.com/cheekybits/is v0.0.0-20150225183255-68e9c0620927
+	github.com/gogo/protobuf v1.2.1
 	github.com/ipfs/go-ipfs-files v0.0.1
 	github.com/ipfs/go-ipfs-util v0.0.1
+	github.com/ipfs/go-ipns v0.0.1
 	github.com/libp2p/go-libp2p-metrics v0.0.1
 	github.com/libp2p/go-libp2p-peer v0.0.1
 	github.com/mitchellh/go-homedir v1.1.0
